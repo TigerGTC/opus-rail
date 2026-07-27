@@ -1,75 +1,116 @@
+<div align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.png">
+  <img src="assets/logo.png" alt="opus-rail logo — 4.8 interlocked with 5" width="180">
+</picture>
+
 # opus-rail
 
-Claude Code orchestration where **Opus 4.8 drives and Opus 5 works**.
+**4.8 drives. 5 works.**
 
-The premise, measured in real use: Opus 4.8 as the main-loop orchestrator follows
-project doctrine, keeps a leaner context window, and produces a better working flow —
-while Opus 5 is at its best inside tightly scoped, single-objective tasks. So this
-setup pins the orchestrator to 4.8 and gives it three delegation lanes:
+Claude Code orchestration where Opus 4.8 is the main-loop orchestrator and
+Opus 5 runs only inside tightly scoped subagents.
 
-- **`executor`** (Opus 5) — the default destination for implementation: coding,
-  debugging, test-writing, focused review. Dispatched per task with a full scope:
-  objective, exact paths, constraints, the command that must pass, return format.
-- **`redteam`** (Opus 5) — read-only adversarial reviewer, dispatched against ideas,
-  plans, and designs *before* they're presented. Advisory by design: it sees only the
-  slice it's handed, so the orchestrator adjudicates every finding from the full
-  picture — a refutation whose evidence survives that check binds; opinions on
-  direction never do.
-- **`worker`** (Sonnet) — mechanical bulk and read-heavy search, kept cheap.
+[![License: MIT](https://img.shields.io/badge/License-MIT-e8572a.svg)](LICENSE)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-%E2%89%A5%202.1.219-e8572a.svg)](https://code.claude.com/docs)
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-555.svg)](#)
 
-Two ways to run it:
+</div>
 
-## 1. Full system (`full/`)
+---
 
-Hook-driven. Nothing blocks — the hook injects the right rule at the moment it
-matters, which measurement showed is what actually changes behavior. A
-model-conditional hook (`opus-rails.py`) injects the operating rules
-only into sessions whose main loop is Opus — non-Opus sessions pay nothing —
-and re-injects after compaction. macOS/Linux only (hook paths and shell). It includes a **routing check** that fires on
-implementation-shaped prompts at the moment the routing decision is made. That check
-exists because of a measured failure: with the delegation rule injected as prose only,
-a live opus session implemented a 2-file task directly with zero dispatches; with the
-routing check, the same class of task produced one properly scoped executor dispatch
-and zero direct edits. Telemetry (`opus-rails.py stats`) reports injection counts,
-routing-check firings, and dispatch attempts by agent — enough to watch the
-delegation trend and notice a dead guard (a dispatch is logged at pre-tool time,
-so it counts attempts, not confirmed completions).
+## Why
 
-Install: see [`full/INSTALL.md`](full/INSTALL.md).
+Measured in real use: Opus 4.8 as the orchestrator follows project doctrine,
+keeps a leaner context window, and produces a better working flow — while Opus 5
+is at its best inside single-objective, fully scoped tasks. opus-rail wires that
+split into Claude Code instead of hoping the model remembers it:
 
-## 2. Skill only (`skill/`)
+| Lane | Model | Job |
+|---|---|---|
+| **orchestrator** | Opus 4.8 (main loop) | frame tasks, dispatch, adjudicate, verify, commit |
+| **`executor`** | Opus 5 | implementation, debugging, tests, focused review — per task |
+| **`redteam`** | Opus 5 | adversarial review of ideas/plans *before* they're presented |
+| **`worker`** | Sonnet | mechanical bulk, read-heavy search |
 
-Distribution-friendly: no hooks, no settings surgery, nothing persistent. Copy one
-skill folder, then run `/opus-rail` at the start of a session to switch it into the
-same orchestration for the rest of that session. Same roles and rules, embedded in
-the skill text; the trade is enforcement (the model follows instructions rather than
-being re-prompted by hooks) and you re-run it each session.
+```mermaid
+sequenceDiagram
+    participant U as You
+    participant O as Opus 4.8 (orchestrator)
+    participant R as redteam (Opus 5)
+    participant E as executor (Opus 5)
+    U->>O: implementation-shaped prompt
+    Note over O: ROUTING CHECK injected<br/>at the moment of decision
+    O->>R: proposal + context (plans/designs)
+    R-->>O: advisory findings, evidence-ranked
+    O->>E: scoped dispatch: objective, paths,<br/>constraints, command that must pass
+    E-->>O: files changed + verification result
+    O->>U: adjudicated, verified result
+```
 
-Install (requires Claude Code ≥ 2.1.219 so the `opus`/`sonnet` model aliases resolve
-as the skill assumes):
+## Does it actually change behavior?
+
+The core mechanism exists because prose alone measurably failed. Same class of
+2-file task, same session setup, live A/B:
+
+| | rails as prose only | with point-of-decision routing check |
+|---|---|---|
+| subagent dispatches | 0 | 1 (scoped, 2.6k-char brief) |
+| direct edits by orchestrator | 2 | **0** |
+
+The system was then reviewed adversarially three ways — by a Claude redteam
+agent, by GPT via Codex, and by Kimi K3 — and every surviving finding was fixed
+(see the commit history, which documents what each review caught).
+
+Run the comparison yourself: **[`bench/`](bench/)** contains a harness that runs
+identical tasks against isolated Opus 5 and the opus-rail workflow in fresh
+sandboxes and reports pass/fail, tokens, cost, and dispatch behavior.
+
+## Install
+
+Two variants — run **one**, not both:
+
+### Full system (hook-enforced)
+
+Model-conditional hooks inject the rules only into Opus sessions, re-inject
+after compaction, fire a routing check on implementation-shaped prompts, and
+log telemetry (`opus-rails.py stats`). → **[full/INSTALL.md](full/INSTALL.md)**
+
+### Skill only (zero-footprint)
+
+No hooks, no settings surgery. Copy one folder, run `/opus-rail` per session
+(`/opus-rail plus` to add the dispatched redteam lane):
 
 ```bash
 mkdir -p ~/.claude/skills && cp -R skill/opus-rail ~/.claude/skills/
 ```
 
-Then run `/opus-rail` at the start of each session — or `/opus-rail plus` to also
-enable the dispatched redteam lane (off by default in the skill variant for token
-efficiency; in standard mode the orchestrator self-red-teams without a dispatch).
+The trade: instructions instead of hook enforcement, and it assumes an unpinned
+`opus` alias (= Opus 5) for its subagent lanes. → **[skill/opus-rail/SKILL.md](skill/opus-rail/SKILL.md)**
 
-## Known boundaries (measured, 2026-07)
+## Known boundaries (measured)
 
-- **Hooks do not fire inside subagents.** Verified live: a `pip install` invocation
-  inside a subagent ran with no hook interception. Any guard you rely on (dependency
-  approval, destructive-command gating) must be written into the agent definitions —
-  the ones here carry those prohibitions explicitly.
-- **Headless `--print` sessions** have no statusline, so the model flag that makes
-  first-prompt injection work is never written; rails resolve from the transcript
-  starting with the second exchange. Interactive sessions are covered from the first
-  render (see `full/statusline-flag-snippet.sh`).
-- The rails text is opinionated and was derived from audited failure sessions on the
-  author's machine; edit the rule text to taste, keep the mechanism.
-- **The two variants are not fully independent**: the full system's env pin re-points
-  the `opus` alias to 4.8 machine-wide, so the skill variant's `model: "opus"`
-  subagent lanes would then resolve to 4.8 instead of Opus 5. Run one variant or the
-  other, not both; the skill assumes an unpinned `opus` alias (Claude Code ≥ 2.1.219,
-  where it resolves to Opus 5).
+- **Hooks do not fire inside subagents** — verified live (a `pip install` inside a
+  subagent ran uninterception). Guards you care about must live in the agent
+  definitions; the ones shipped here do.
+- **Headless `--print` sessions** have no statusline, so first-prompt model
+  resolution needs the session flag (`--session-id` + pre-written flag, as
+  `bench/` does) or falls back to transcript scan from the second exchange.
+- The rails text is opinionated, derived from audited failure sessions; edit the
+  words, keep the mechanism.
+- The full system's env pin re-points the `opus` alias **machine-wide** to 4.8;
+  `/model claude-opus-5` bypasses it.
+
+## Repo layout
+
+```
+full/    hook, agents, settings snippet, install guide
+skill/   the /opus-rail session skill
+bench/   isolated Opus 5 vs opus-rail benchmark harness
+assets/  logos
+```
+
+## License
+
+[MIT](LICENSE) © 2026 TigerGTC
