@@ -63,13 +63,11 @@ The system was then reviewed adversarially three ways — by a Claude redteam
 agent, by GPT via Codex, and by Kimi K3 — and every surviving finding was fixed
 (see the commit history, which documents what each review caught).
 
-![benchmark behavior chart](bench/results/pilot-2026-07-26/chart-behavior.svg)
-
-Run the comparison yourself: **[`bench/`](bench/)** is a full benchmark harness —
-identical sandboxed tasks against isolated Opus 5 vs the opus-rail workflow,
-objective test-based verdicts, per-run arm verification, and a methodology doc
-that states its own threats to validity and what result would falsify the claim.
-Numbers only get quoted here with their raw `results.json` committed.
+The strongest observed benefits are interactive-session properties — doctrine
+adherence over long sessions and a lean orchestrator context (delegated churn
+never enters the 4.8 window). Those resist honest measurement in one-shot
+harnesses; an earlier benchmark attempt is preserved on the `bench-archive`
+branch for anyone who wants to build a multi-turn version.
 
 ## Install
 
@@ -99,8 +97,8 @@ The trade: instructions instead of hook enforcement, and it assumes an unpinned
   subagent ran uninterception). Guards you care about must live in the agent
   definitions; the ones shipped here do.
 - **Headless `--print` sessions** have no statusline, so first-prompt model
-  resolution needs the session flag (`--session-id` + pre-written flag, as
-  `bench/` does) or falls back to transcript scan from the second exchange.
+  resolution needs a pre-written session flag (`--session-id` + flag file) or
+  falls back to transcript scan from the second exchange.
 - The rails text is opinionated, derived from audited failure sessions; edit the
   words, keep the mechanism.
 - The full system's env pin re-points the `opus` alias **machine-wide** to 4.8;
@@ -111,7 +109,6 @@ The trade: instructions instead of hook enforcement, and it assumes an unpinned
 ```
 full/    hook, agents, settings snippet, install guide
 skill/   the /opus-rail session skill
-bench/   isolated Opus 5 vs opus-rail benchmark harness
 assets/  logos
 ```
 
