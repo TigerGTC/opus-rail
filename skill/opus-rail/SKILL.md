@@ -36,7 +36,8 @@ better outcomes, and a leaner context window than Opus 5 driving directly.
   confirm to the user in one line. Then put the seat back on Opus 5: you
   cannot switch the main model yourself, so tell the user to run `/model opus`
   (which resolves to Opus 5 on machines without the full system's pin — with
-  the pin, `/model claude-opus-5`). A later `/opus-rail` (any mode)
+  the pin, type `/model claude-opus-5` inline: the bare picker only lists
+  families, so the full id must be typed as the argument). A later `/opus-rail` (any mode)
   re-enables. If the full hook system is also installed, its hook sees this
   same prompt and pauses its rails for the session too.
 

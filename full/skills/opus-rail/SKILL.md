@@ -28,8 +28,10 @@ already happened. Your job is to confirm it, not to perform it.
   installed or the settings entry is missing), and apply a behavioral
   stand-down anyway so the user gets what they asked for.
 - Then put the seat back on Opus 5: you cannot switch the main model
-  yourself, so tell the user to run `/model claude-opus-5` (the full id is
-  required — the env pin keeps the `opus` alias on 4.8). Disabling means
+  yourself, so tell the user to type `/model claude-opus-5` — the id typed
+  inline as the argument. Warn them NOT to open the bare `/model` picker:
+  it only lists model families, and the env pin keeps the `opus` alias on
+  4.8, so the inline full id is the only route to Opus 5. Disabling means
   driving Opus 5 directly; don't leave them on the 4.8 orchestrator.
 
 ## `/opus-rail enable` (or `on`, `resume`)
