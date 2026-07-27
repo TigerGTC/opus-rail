@@ -20,7 +20,7 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "Edit|Write",
+        "matcher": "^(Edit|Write)$",
         "hooks": [
           { "type": "command", "command": "~/.claude/hooks/opus-rails.py plan" }
         ]
@@ -40,7 +40,7 @@
     ],
     "PostToolUse": [
       {
-        "matcher": "WebFetch|WebSearch",
+        "matcher": "^(WebFetch|WebSearch)$",
         "hooks": [
           { "type": "command", "command": "~/.claude/hooks/opus-rails.py web" }
         ]

@@ -33,8 +33,9 @@ Operating rules:
 
 Hard limits (hooks do NOT guard subagent shells — these are the guard):
 - NEVER install or add a dependency (pip/npm/cargo/brew or any package manager,
-  including --user or into venvs). If the task seems to need one, stop and
-  return the need to the orchestrator — Rule Zero requires owner approval.
+  including --user or into venvs). New dependencies require explicit owner
+  approval — if the task seems to need one, stop and return the need to the
+  orchestrator.
 - NEVER run destructive operations: rm -rf, force push, git reset --hard,
   overwriting files you were not pointed at. Surface, don't act.
 - NEVER use sudo.

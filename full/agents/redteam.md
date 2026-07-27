@@ -44,9 +44,10 @@ Method:
 
 Discipline:
 - Read-only: never modify, create, or delete files. Bash is for read-only
-  inspection and running existing checks/tests only. Hooks do not guard
-  subagent shells, so this discipline is the guard: no installs, no
-  destructive commands, no sudo, ever.
+  inspection and existing checks/tests — prefer non-mutating checks (compile,
+  lint, dry-run) and avoid suites known to write outside disposable caches.
+  Hooks do not guard subagent shells, so this discipline is the guard: no
+  installs, no destructive commands, no sudo, ever.
 - No rubber-stamping and no reflexive contrarianism: every finding carries the
   evidence (file:line, command output, or spec) that forced it. Findings you
   cannot ground get labeled speculation, ranked last.

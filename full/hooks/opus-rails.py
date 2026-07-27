@@ -31,7 +31,7 @@ Subcommands (one per hook event, session-registry.py idiom):
               implementation-shaped prompts (re-armed 20 min); also the compaction
               FALLBACK — if PreCompact left a marker, re-inject rails + re-read-the-goal
   plan        PreToolUse Edit|Write premise checklist on plans/**.md, once per file
-  web         PostToolUse WebFetch|WebSearch  sourcing rail, re-armed after 45 min or compact
+  web         PostToolUse WebFetch|WebSearch  sourcing rail, re-armed after 15 min or compact
   dispatch    PreToolUse ^Agent$    observation only: log subagent dispatches for stats
   compact     SessionStart(compact) re-inject rails + re-read-the-goal; consumes the marker
   precompact  PreCompact            model-agnostic: drop the compaction marker (fallback
@@ -65,28 +65,27 @@ FLAG_FRESH_S = 600                   # a statusline flag younger than this outra
                                      # names the OLD model, the statusline the new one
 PRUNE_S = 7 * 24 * 3600
 
-RAILS = """OPUS RAILS (model-conditional; injected because this session's main loop is Opus. Rules 1-6 are epistemic guards derived from an audited failure profile — receipts in ~/.claude/docs/opus-guardrails.md; rules 7-8 are the orchestration doctrine: 4.8 drives, Opus 5 executes and red-teams):
+RAILS = """OPUS RAILS (model-conditional; injected because this session's main loop is Opus. Rules 1-6 are epistemic guards derived from an audited failure profile; rules 7-8 are the orchestration doctrine: 4.8 drives, Opus 5 executes and red-teams):
 1. Mechanism claims need a run, not plausibility. Before stating "X happens because Y", verify Y against the actual code/pipeline this session, or write [unverified].
 2. External facts come from authoritative surfaces — spec/openapi.json/llms.txt/source — never a marketing page or memory. If no authority was opened this session, the claim carries [unverified].
 3. Consult your own record before deciding: MEMORY.md, the repo's plans and findings docs. If a claim contradicts something already recorded, resolve the contradiction first — do not proceed past it.
 4. Count before designing. Any plan built on a corpus/dataset/asset set starts by counting its DISTINCT items, not its files or frames.
 5. A user answer that widens scope is a checkpoint, not permission. Before building on it, restate the session goal in one line and check the widened scope against the evidence already recorded — ambition absorbed without that check is how a plan died same-day here.
 6. Decisions carry the measurement that forced them. A decision carrying only reasoning is a hypothesis and belongs in Open questions.
-7. You are the orchestrator, not the implementer. Route each TASK before touching it — not once per session: implementation, debugging, and focused review go to `executor` (Opus 5); mechanical bulk and read-heavy search go to `worker` (Sonnet). A dispatch is scoped or it is rework: single objective, exact file paths, constraints that apply, the command that must pass, and the return format expected. Implement directly only when the whole change is one trivial file — a second file, real debugging, or design judgment means dispatch. This is the owner's measured decision (better results AND a leaner orchestrator context; token cost accepted) — it supersedes the general one-clean-pass cost rule inside opus sessions. You personally: frame, adjudicate against the real code, verify, commit, update state files.
-8. Ideas, plans, designs, and architectural decisions get an adversarial pass BEFORE being presented or acted on: dispatch the `redteam` agent (Opus 5) with the proposal and enough context to attack it, then adjudicate its findings yourself. Its findings are ADVISORY — it sees only the slice you handed it, and you hold the full context and history. A premise it REFUTED with evidence outranks your reasoning; its opinions on direction or scope do not — reject those from the fuller picture, stating in one line what context dissolves them. Accept only findings that survive your own check against the real code. Skip the pass only for trivial edits and pure lookups."""
+7. You are the orchestrator, not the implementer. Route each TASK before touching it — not once per session: implementation, debugging, and focused review go to `executor` (Opus 5); mechanical bulk and read-heavy search go to `worker` (Sonnet). A dispatch is scoped or it is rework: single objective, exact file paths, constraints that apply, the command that must pass, and the return format expected. Implement directly only when the whole change is one trivial file — a second file, real debugging, or design judgment means dispatch: `executor` when it needs judgment, `worker` when it is purely mechanical. This is the owner's measured decision (better results AND a leaner orchestrator context; token cost accepted) — inside opus sessions it supersedes cost-minimizing do-it-yourself habits. You personally: frame, adjudicate against the real code, verify, commit, update state files.
+8. Ideas, plans, designs, and architectural decisions get an adversarial pass BEFORE being presented or acted on: dispatch the `redteam` agent (Opus 5) with the proposal and enough context to attack it, then adjudicate EVERY finding against the real code yourself — that check is the single rule of finality. A premise refutation whose evidence survives your check overrides your prior reasoning; opinions on direction or scope never bind — reject those from the fuller picture, stating in one line what context dissolves them. Skip the pass only for trivial edits and pure lookups."""
 
-PLAN_GUARD = ("PLAN-WRITE GUARD (Opus, once per plan file): before this plan is presented as "
+PLAN_GUARD = ("PLAN-WRITE GUARD (Opus, re-armed per plan file): before this plan is presented as "
               "ready — (a) COUNT the distinct items of any corpus/dataset/asset set a phase is "
               "built on; (b) verify each premise against the authoritative surface (spec/source), "
               "not a secondary page; (c) grep earlier plans for decisions this one reverses and "
               "name each reversal explicitly with the new evidence that justifies it; (d) mark "
               "every Decision as measurement-backed or hypothesis — hypotheses move to Open "
-              "questions; (e) state the likeliest way this plan is falsified within a week; "
-              "(f) dispatch the `redteam` agent (Opus 5) against the full plan text and "
-              "adjudicate its findings before presenting. A plan was falsified same-day here "
-              "for skipping exactly these.")
+              "questions; (e) state the likeliest way this plan is falsified within a week. "
+              "Rule 8's redteam pass applies to the full plan text. A plan was falsified "
+              "same-day here for skipping exactly these.")
 
-WEB_GUARD = ("SOURCING RAIL (Opus, once per session): marketing pages are not specs. Before "
+WEB_GUARD = ("SOURCING RAIL (Opus, re-armed periodically): marketing pages are not specs. Before "
              "asserting capabilities, limits, or pricing of an external system, open its "
              "authoritative surface (openapi.json, llms.txt, docs API, source). Claims sourced "
              "from anything else carry [unverified].")
@@ -98,13 +97,13 @@ COMPACT_NOTE = ("\nCONTEXT WAS JUST COMPACTED. Re-read the current goal and task
 EFFORT_NOTE = ("\n(Effort is %s: verification steps are the first thing reduced effort drops. "
                "Do not skip them — prefer flagging [unverified] over asserting.)")
 
-ROUTE_NOTE = ("ROUTING CHECK (Opus, implementation-shaped turn): this turn looks like "
-              "implementation. Either dispatch `executor` now — scoped: objective, exact "
-              "paths, constraints, the command that must pass, return format — or state in "
-              "one line why direct is right (trivial single-file only). Empirically, rails "
-              "prose alone did not produce delegation at the point of action; this check "
-              "exists because an opus session implemented a 2-file task directly with rule 7 "
-              "in context. Delegating also keeps this context window lean.")
+# Measured basis for this check: an opus session with rule 7 in context implemented a
+# 2-file task directly with zero dispatches; with this point-of-decision injection the
+# same class of task produced one scoped executor dispatch and zero direct edits.
+ROUTE_NOTE = ("ROUTING CHECK (Opus): this turn looks like implementation. Dispatch "
+              "`executor` now (scoped: objective, exact paths, constraints, the command "
+              "that must pass, return format) or state in one line why direct is right "
+              "(trivial single-file only).")
 
 # Implementation-shaped prompt: imperative build verb present, not a question, not a
 # slash command. Deliberately loose — the note is advisory and re-armed, not a gate.
@@ -164,33 +163,37 @@ def _model_from_transcript(tp, limit=TAIL_BYTES):
     statusline flag outranks it."""
     if not tp:
         return ""
-    text = _read(tp, limit)
-    if '"assistant"' not in text and limit < TAIL_MAX:
-        text = _read(tp, TAIL_MAX)   # giant tool results can push assistants out of range
-    for line in reversed(text.splitlines()):
-        if '"assistant"' not in line:
-            continue
-        try:
-            d = json.loads(line)
-        except ValueError:
-            continue
-        if d.get("type") != "assistant" or d.get("isSidechain"):
-            continue
-        m = ((d.get("message") or {}).get("model")) or ""
-        if m and "synthetic" not in m:
-            return m
-    return ""
+
+    def _scan(text):
+        for line in reversed(text.splitlines()):
+            if '"assistant"' not in line:
+                continue
+            try:
+                d = json.loads(line)
+            except ValueError:
+                continue
+            if d.get("type") != "assistant" or d.get("isSidechain"):
+                continue
+            m = ((d.get("message") or {}).get("model")) or ""
+            if m and "synthetic" not in m:
+                return m
+        return ""
+
+    m = _scan(_read(tp, limit))
+    if not m and limit < TAIL_MAX:
+        # Retry on NO RESULT, not on a substring pre-check (Kimi review: the word
+        # "assistant" appears in nearly every transcript tail, so the old gate
+        # almost never allowed the retry that giant tool results make necessary).
+        m = _scan(_read(tp, TAIL_MAX))
+    return m
 
 
 def _flag_paths(data):
-    out = []
+    # Session-keyed only. The cwd-keyed tier was removed (Kimi review) after observed
+    # cross-contamination: every same-cwd session overwrote it each render, so
+    # concurrent sessions on different models misclassified each other.
     sid = data.get("session_id")
-    if sid:
-        out.append(FLAG_DIR / ("sess-%s" % sid))
-    cwd = data.get("cwd")
-    if cwd:
-        out.append(FLAG_DIR / hashlib.sha1(cwd.encode()).hexdigest()[:16])
-    return out
+    return [FLAG_DIR / ("sess-%s" % sid)] if sid else []
 
 
 def _model_from_flag(data, fresh_only=False):
@@ -250,6 +253,11 @@ def _prune():
     now = time.time()
     try:
         for p in STATE.iterdir():
+            if p.suffix == ".jsonl":
+                continue   # telemetry log is not a marker — never prune it
+            if now - p.stat().st_mtime > PRUNE_S:
+                p.unlink()
+        for p in FLAG_DIR.iterdir():   # model flags: same 7-day horizon
             if now - p.stat().st_mtime > PRUNE_S:
                 p.unlink()
     except OSError:
@@ -265,6 +273,7 @@ def _log(data, event, source):
     (e.g. dispatches), not injections — stats reports them separately."""
     try:
         model, via = _resolve(data)
+        LOG.parent.mkdir(parents=True, exist_ok=True)
         with open(LOG, "a") as f:
             f.write(json.dumps({"ts": int(time.time()), "event": event,
                                 "session": data.get("session_id"),
@@ -282,12 +291,18 @@ def _emit_json(event, text):
 WEB_REARM_S = 15 * 60
 
 
+COMPACT_MARKER_MAX_S = 30 * 60
+
+
 def _consume_compact_marker(data):
     m = _marker(data.get("session_id"), "compacted")
     if not m.exists():
         return False
     try:
+        stale = time.time() - m.stat().st_mtime > COMPACT_MARKER_MAX_S
         m.unlink()
+        if stale:
+            return False   # aborted/ancient compaction: discard, don't false-claim
     except OSError:
         pass
     # a compaction also re-arms the web rail: the sourcing reminder was summarized away
@@ -305,9 +320,18 @@ def _route_check(data):
     the moment the routing decision is made — the user prompt — not after edits happened.
     Would have fired on the observed failure ('Implement the missing sub and ...')."""
     text = (data.get("prompt") or "").strip()
-    if len(text) < 20 or text.startswith("/") or text.endswith("?"):
+    if len(text) < 20 or text.startswith("/"):
+        return ""
+    # A "?" exempts genuine questions, but "Can/could/will you implement X?" is a
+    # request in question clothing (Kimi review) — the politeness form of exactly
+    # the failure class this check exists for.
+    if text.endswith("?") and not re.match(r"(?i)(can|could|would|will)\s+you\b", text):
         return ""
     if not IMPL_RE.search(text):
+        return ""
+    # "write/draft a plan" is plan work, not implementation — the plan guard owns it
+    # (Sol review): don't route plan-authoring prompts at executor.
+    if re.search(r"(?i)\b(write|draft|create|make)\b[^.]{0,30}\bplan\b", text):
         return ""
     m = _marker(data.get("session_id"), "route")
     try:
@@ -323,9 +347,13 @@ def _route_check(data):
 def cmd_prompt(data):
     _prune()
     if not _is_opus(data):
+        if _resolve(data)[1] == "unresolved":
+            _log(data, "obs-miss-unresolved", "")   # a silent miss is a lying guardrail
         return
     shown = _marker(data.get("session_id"), "shown")
-    effort = ((data.get("effort") or {}).get("level")) or ""
+    eff = data.get("effort")
+    effort = (eff.get("level") if isinstance(eff, dict) else eff) or ""
+    effort = effort if isinstance(effort, str) else ""
     extra = EFFORT_NOTE % effort if effort in ("low", "medium") else ""
     route = _route_check(data)
     if _consume_compact_marker(data):
@@ -351,11 +379,18 @@ def cmd_plan(data):
         return
     tool = data.get("tool_name") or ""
     if tool == "ExitPlanMode":
-        # Kimi finding: plan-mode plans never touch plans/*.md, so the file guard misses
-        # an entire plan genre. Same checklist, keyed once per session.
-        if _claim(_marker(data.get("session_id"), "plan.exitplanmode")):
-            _emit_json("PreToolUse", PLAN_GUARD)
-            _log(data, "plan-exitplanmode", "")
+        # Plan-mode plans never touch plans/*.md, so the file guard misses an entire
+        # plan genre. Re-armed like the file guard — a second plan-mode plan in the
+        # same session deserves the same checklist.
+        m = _marker(data.get("session_id"), "plan.exitplanmode")
+        try:
+            if m.exists() and time.time() - m.stat().st_mtime < PLAN_REARM_S:
+                return
+            m.write_text(str(int(time.time())))
+        except OSError:
+            return
+        _emit_json("PreToolUse", PLAN_GUARD)
+        _log(data, "plan-exitplanmode", "")
         return
     path = ((data.get("tool_input") or {}).get("file_path")) or ""
     if not PLAN_RE.search(path):
@@ -407,7 +442,8 @@ def cmd_compact(data):
 def cmd_dispatch(data):
     """PreToolUse ^Agent$ — observation only, no injection. Records each subagent
     dispatch (with subagent_type) so `stats` can report the delegation rate; a routing
-    rule whose usage can't be measured can't be tuned. Redteam review rejected active
+    rule whose usage can't be measured can't be tuned. PreToolUse timing means these
+    are dispatch ATTEMPTS, not confirmed completions. Redteam review rejected active
     guards here: matcher must be ^Agent$ (Task* tools are unrelated), and the thin-prompt
     heuristic had 0/499 true positives on the historical dispatch corpus."""
     if not _is_opus(data):
@@ -428,23 +464,28 @@ def cmd_precompact(data):
 
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
-    try:
-        data = json.load(sys.stdin)
-    except ValueError:
-        return
-    if cmd == "stats":
-        try:
-            lines = [json.loads(l) for l in _read(LOG).splitlines() if l.strip()]
-        except ValueError:
-            lines = []
+    if cmd == "stats":   # stats ignores stdin — don't block on a TTY
+        lines = []
+        for l in _read(LOG).splitlines():
+            try:
+                d = json.loads(l)
+                if isinstance(d, dict) and d.get("event"):
+                    lines.append(d)
+            except ValueError:
+                continue   # one corrupt line must not zero the whole history
         from collections import Counter
         inj = [l for l in lines if not l["event"].startswith("obs-")]
         obs = [l for l in lines if l["event"].startswith("obs-")]
         print("injections: %d  by-event: %s  by-source: %s"
               % (len(inj), dict(Counter(l["event"] for l in inj)),
                  dict(Counter(l.get("via") or "n/a" for l in inj))))
-        print("dispatches: %d  by-agent: %s"
-              % (len(obs), dict(Counter(l.get("detail") or "n/a" for l in obs))))
+        print("observations: %d  by-event/agent: %s"
+              % (len(obs), dict(Counter((l["event"].replace("obs-", "") + ":" +
+                                         (l.get("detail") or "-")) for l in obs))))
+        return
+    try:
+        data = json.load(sys.stdin)
+    except ValueError:
         return
     fn = {"prompt": cmd_prompt, "plan": cmd_plan, "web": cmd_web,
           "compact": cmd_compact, "precompact": cmd_precompact,
