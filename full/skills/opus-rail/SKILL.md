@@ -27,6 +27,10 @@ already happened. Your job is to confirm it, not to perform it.
 - If absent: the hook did not fire — say so plainly (likely the hook isn't
   installed or the settings entry is missing), and apply a behavioral
   stand-down anyway so the user gets what they asked for.
+- Then put the seat back on Opus 5: you cannot switch the main model
+  yourself, so tell the user to run `/model claude-opus-5` (the full id is
+  required — the env pin keeps the `opus` alias on 4.8). Disabling means
+  driving Opus 5 directly; don't leave them on the 4.8 orchestrator.
 
 ## `/opus-rail enable` (or `on`, `resume`)
 
@@ -35,6 +39,9 @@ already happened. Your job is to confirm it, not to perform it.
   behavior immediately.
 - If the confirmation is absent, say the hook did not fire and resume the
   routing behavior anyway.
+- Then restore the orchestrator seat: tell the user to run `/model opus`
+  (the pinned alias → Opus 4.8) if the session is currently on another
+  model.
 
 ## `/opus-rail status`
 

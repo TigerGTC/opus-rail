@@ -33,9 +33,12 @@ better outcomes, and a leaner context window than Opus 5 driving directly.
   scrutiny yourself.
 - `/opus-rail disable` — stand down: stop applying this skill's orchestration
   and routing for the rest of the session and revert to default behavior;
-  confirm to the user in one line. A later `/opus-rail` (any mode) re-enables.
-  If the full hook system is also installed, its hook sees this same prompt and
-  pauses its rails for the session too.
+  confirm to the user in one line. Then put the seat back on Opus 5: you
+  cannot switch the main model yourself, so tell the user to run `/model opus`
+  (which resolves to Opus 5 on machines without the full system's pin — with
+  the pin, `/model claude-opus-5`). A later `/opus-rail` (any mode)
+  re-enables. If the full hook system is also installed, its hook sees this
+  same prompt and pauses its rails for the session too.
 
 Arguments combine (`/opus-rail plus redteam`) and decide the mode for the whole
 session; if the user later asks for another mode, re-read this section and switch.
