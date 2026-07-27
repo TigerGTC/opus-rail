@@ -97,13 +97,19 @@ COMPACT_NOTE = ("\nCONTEXT WAS JUST COMPACTED. Re-read the current goal and task
 EFFORT_NOTE = ("\n(Effort is %s: verification steps are the first thing reduced effort drops. "
                "Do not skip them — prefer flagging [unverified] over asserting.)")
 
-# Measured basis for this check: an opus session with rule 7 in context implemented a
-# 2-file task directly with zero dispatches; with this point-of-decision injection the
-# same class of task produced one scoped executor dispatch and zero direct edits.
-ROUTE_NOTE = ("ROUTING CHECK (Opus): this turn looks like implementation. Dispatch "
-              "`executor` now (scoped: objective, exact paths, constraints, the command "
-              "that must pass, return format) or state in one line why direct is right "
-              "(trivial single-file only).")
+# Measured basis: an opus session with rule 7 in context implemented a 2-file task
+# directly with zero dispatches; this point-of-decision injection fixed that. A later
+# benchmark run showed a TRIMMED version of this note regressed to zero dispatches
+# while this fuller wording produced a scoped dispatch — the stated default and the
+# one-line-justification requirement are load-bearing; do not shorten them again.
+ROUTE_NOTE = ("ROUTING CHECK (Opus): this turn looks like implementation. The DEFAULT "
+              "action is to dispatch `executor` now, scoped: single objective, exact "
+              "file paths, constraints, the command that must pass, and the return "
+              "format you expect. Direct implementation is the exception: it requires "
+              "stating, in one line, why the whole change is one trivial file. Prose "
+              "rules alone measurably failed to produce delegation at the point of "
+              "action — that is why this check exists. Delegating also keeps this "
+              "context window lean.")
 
 # Implementation-shaped prompt: imperative build verb present, not a question, not a
 # slash command. Deliberately loose — the note is advisory and re-armed, not a gate.

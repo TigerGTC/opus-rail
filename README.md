@@ -63,9 +63,13 @@ The system was then reviewed adversarially three ways — by a Claude redteam
 agent, by GPT via Codex, and by Kimi K3 — and every surviving finding was fixed
 (see the commit history, which documents what each review caught).
 
-Run the comparison yourself: **[`bench/`](bench/)** contains a harness that runs
-identical tasks against isolated Opus 5 and the opus-rail workflow in fresh
-sandboxes and reports pass/fail, tokens, cost, and dispatch behavior.
+![benchmark behavior chart](bench/results/pilot-2026-07-26/chart-behavior.svg)
+
+Run the comparison yourself: **[`bench/`](bench/)** is a full benchmark harness —
+identical sandboxed tasks against isolated Opus 5 vs the opus-rail workflow,
+objective test-based verdicts, per-run arm verification, and a methodology doc
+that states its own threats to validity and what result would falsify the claim.
+Numbers only get quoted here with their raw `results.json` committed.
 
 ## Install
 

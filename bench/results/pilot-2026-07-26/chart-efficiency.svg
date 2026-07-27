@@ -1,0 +1,92 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='780' height='752' viewBox='0 0 780 752' font-family='-apple-system,Segoe UI,sans-serif'>
+<rect width='780' height='752' fill='#fcfcfb' rx='8'/>
+<text x='60' y='28' fill='#1f2937' font-size='16' font-weight='700'>opus-rail benchmark — efficiency, three arms, identical tasks</text>
+<text x='60' y='46' fill='#6b7280' font-size='11'>Faded bar + ✗ = task tests failed for that run. Source: results.json in this directory.</text>
+<rect x='60' y='58' width='10' height='10' rx='2' fill='#3b82f6'/>
+<text x='74' y='67' fill='#1f2937' font-size='11'>Opus 5 (isolated)</text>
+<rect x='217' y='58' width='10' height='10' rx='2' fill='#e8572a'/>
+<text x='231' y='67' fill='#1f2937' font-size='11'>opus-rail</text>
+<rect x='318' y='58' width='10' height='10' rx='2' fill='#7c3aed'/>
+<text x='332' y='67' fill='#1f2937' font-size='11'>opus-rail plus</text>
+<text x='60' y='100' fill='#1f2937' font-size='13' font-weight='600'>Output tokens (whole session)</text>
+<line x1='60' y1='189.0' x2='760' y2='189.0' stroke='#e5e7eb'/>
+<text x='54' y='192.0' fill='#6b7280' font-size='10' text-anchor='end'>3k</text>
+<line x1='60' y1='120.0' x2='760' y2='120.0' stroke='#e5e7eb'/>
+<text x='54' y='123.0' fill='#6b7280' font-size='10' text-anchor='end'>6k</text>
+<line x1='60' y1='258.0' x2='760' y2='258.0' stroke='#6b7280' stroke-width='1'/>
+<path d='M90.0 258.0 L90.0 180.1 Q90.0 176.1 94.0 176.1 L108.0 176.1 Q112.0 176.1 112.0 180.1 L112.0 258.0 Z' fill='#3b82f6' fill-opacity='1'/>
+<text x='101.0' y='172.1' fill='#6b7280' font-size='9' text-anchor='middle'>4k</text>
+<path d='M114.0 258.0 L114.0 144.7 Q114.0 140.7 118.0 140.7 L132.0 140.7 Q136.0 140.7 136.0 144.7 L136.0 258.0 Z' fill='#e8572a' fill-opacity='1'/>
+<text x='125.0' y='136.7' fill='#6b7280' font-size='9' text-anchor='middle'>5k</text>
+<path d='M138.0 258.0 L138.0 154.9 Q138.0 150.9 142.0 150.9 L156.0 150.9 Q160.0 150.9 160.0 154.9 L160.0 258.0 Z' fill='#7c3aed' fill-opacity='1'/>
+<text x='149.0' y='146.9' fill='#6b7280' font-size='9' text-anchor='middle'>5k</text>
+<text x='126.0' y='274.0' fill='#1f2937' font-size='11' text-anchor='middle'>config-bughunt</text>
+<path d='M268.0 258.0 L268.0 191.6 Q268.0 187.6 272.0 187.6 L286.0 187.6 Q290.0 187.6 290.0 191.6 L290.0 258.0 Z' fill='#3b82f6' fill-opacity='1'/>
+<text x='279.0' y='183.6' fill='#6b7280' font-size='9' text-anchor='middle'>3k</text>
+<path d='M292.0 258.0 L292.0 124.0 Q292.0 120.0 296.0 120.0 L310.0 120.0 Q314.0 120.0 314.0 124.0 L314.0 258.0 Z' fill='#e8572a' fill-opacity='1'/>
+<text x='303.0' y='116.0' fill='#6b7280' font-size='9' text-anchor='middle'>6k</text>
+<path d='M316.0 258.0 L316.0 215.2 Q316.0 211.2 320.0 211.2 L334.0 211.2 Q338.0 211.2 338.0 215.2 L338.0 258.0 Z' fill='#7c3aed' fill-opacity='0.35'/>
+<text x='327.0' y='207.2' fill='#6b7280' font-size='9' text-anchor='middle'>2k ✗</text>
+<text x='304.0' y='274.0' fill='#1f2937' font-size='11' text-anchor='middle'>kv-ttl-store</text>
+<path d='M446.0 258.0 L446.0 183.8 Q446.0 179.8 450.0 179.8 L464.0 179.8 Q468.0 179.8 468.0 183.8 L468.0 258.0 Z' fill='#3b82f6' fill-opacity='1'/>
+<text x='457.0' y='175.8' fill='#6b7280' font-size='9' text-anchor='middle'>3k</text>
+<path d='M470.0 258.0 L470.0 178.9 Q470.0 174.9 474.0 174.9 L488.0 174.9 Q492.0 174.9 492.0 178.9 L492.0 258.0 Z' fill='#e8572a' fill-opacity='1'/>
+<text x='481.0' y='170.9' fill='#6b7280' font-size='9' text-anchor='middle'>4k</text>
+<path d='M494.0 258.0 L494.0 190.5 Q494.0 186.5 498.0 186.5 L512.0 186.5 Q516.0 186.5 516.0 190.5 L516.0 258.0 Z' fill='#7c3aed' fill-opacity='1'/>
+<text x='505.0' y='182.5' fill='#6b7280' font-size='9' text-anchor='middle'>3k</text>
+<text x='482.0' y='274.0' fill='#1f2937' font-size='11' text-anchor='middle'>log-triage</text>
+<text x='60' y='308' fill='#1f2937' font-size='13' font-weight='600'>Cost (USD)</text>
+<line x1='60' y1='397.0' x2='760' y2='397.0' stroke='#e5e7eb'/>
+<text x='54' y='400.0' fill='#6b7280' font-size='10' text-anchor='end'>$0.38</text>
+<line x1='60' y1='328.0' x2='760' y2='328.0' stroke='#e5e7eb'/>
+<text x='54' y='331.0' fill='#6b7280' font-size='10' text-anchor='end'>$0.76</text>
+<line x1='60' y1='466.0' x2='760' y2='466.0' stroke='#6b7280' stroke-width='1'/>
+<path d='M90.0 466.0 L90.0 382.3 Q90.0 378.3 94.0 378.3 L108.0 378.3 Q112.0 378.3 112.0 382.3 L112.0 466.0 Z' fill='#3b82f6' fill-opacity='1'/>
+<text x='101.0' y='374.3' fill='#6b7280' font-size='9' text-anchor='middle'>$0.48</text>
+<path d='M114.0 466.0 L114.0 371.0 Q114.0 367.0 118.0 367.0 L132.0 367.0 Q136.0 367.0 136.0 371.0 L136.0 466.0 Z' fill='#e8572a' fill-opacity='1'/>
+<text x='125.0' y='363.0' fill='#6b7280' font-size='9' text-anchor='middle'>$0.55</text>
+<path d='M138.0 466.0 L138.0 378.4 Q138.0 374.4 142.0 374.4 L156.0 374.4 Q160.0 374.4 160.0 378.4 L160.0 466.0 Z' fill='#7c3aed' fill-opacity='1'/>
+<text x='149.0' y='370.4' fill='#6b7280' font-size='9' text-anchor='middle'>$0.51</text>
+<text x='126.0' y='482.0' fill='#1f2937' font-size='11' text-anchor='middle'>config-bughunt</text>
+<path d='M268.0 466.0 L268.0 393.7 Q268.0 389.7 272.0 389.7 L286.0 389.7 Q290.0 389.7 290.0 393.7 L290.0 466.0 Z' fill='#3b82f6' fill-opacity='1'/>
+<text x='279.0' y='385.7' fill='#6b7280' font-size='9' text-anchor='middle'>$0.42</text>
+<path d='M292.0 466.0 L292.0 332.0 Q292.0 328.0 296.0 328.0 L310.0 328.0 Q314.0 328.0 314.0 332.0 L314.0 466.0 Z' fill='#e8572a' fill-opacity='1'/>
+<text x='303.0' y='324.0' fill='#6b7280' font-size='9' text-anchor='middle'>$0.76</text>
+<path d='M316.0 466.0 L316.0 414.6 Q316.0 410.6 320.0 410.6 L334.0 410.6 Q338.0 410.6 338.0 414.6 L338.0 466.0 Z' fill='#7c3aed' fill-opacity='0.35'/>
+<text x='327.0' y='406.6' fill='#6b7280' font-size='9' text-anchor='middle'>$0.31 ✗</text>
+<text x='304.0' y='482.0' fill='#1f2937' font-size='11' text-anchor='middle'>kv-ttl-store</text>
+<path d='M446.0 466.0 L446.0 393.9 Q446.0 389.9 450.0 389.9 L464.0 389.9 Q468.0 389.9 468.0 393.9 L468.0 466.0 Z' fill='#3b82f6' fill-opacity='1'/>
+<text x='457.0' y='385.9' fill='#6b7280' font-size='9' text-anchor='middle'>$0.42</text>
+<path d='M470.0 466.0 L470.0 392.9 Q470.0 388.9 474.0 388.9 L488.0 388.9 Q492.0 388.9 492.0 392.9 L492.0 466.0 Z' fill='#e8572a' fill-opacity='1'/>
+<text x='481.0' y='384.9' fill='#6b7280' font-size='9' text-anchor='middle'>$0.43</text>
+<path d='M494.0 466.0 L494.0 398.1 Q494.0 394.1 498.0 394.1 L512.0 394.1 Q516.0 394.1 516.0 398.1 L516.0 466.0 Z' fill='#7c3aed' fill-opacity='1'/>
+<text x='505.0' y='390.1' fill='#6b7280' font-size='9' text-anchor='middle'>$0.40</text>
+<text x='482.0' y='482.0' fill='#1f2937' font-size='11' text-anchor='middle'>log-triage</text>
+<text x='60' y='516' fill='#1f2937' font-size='13' font-weight='600'>Wall time (seconds)</text>
+<line x1='60' y1='605.0' x2='760' y2='605.0' stroke='#e5e7eb'/>
+<text x='54' y='608.0' fill='#6b7280' font-size='10' text-anchor='end'>318s</text>
+<line x1='60' y1='536.0' x2='760' y2='536.0' stroke='#e5e7eb'/>
+<text x='54' y='539.0' fill='#6b7280' font-size='10' text-anchor='end'>637s</text>
+<line x1='60' y1='674.0' x2='760' y2='674.0' stroke='#6b7280' stroke-width='1'/>
+<path d='M90.0 674.0 L90.0 663.1 Q90.0 659.1 94.0 659.1 L108.0 659.1 Q112.0 659.1 112.0 663.1 L112.0 674.0 Z' fill='#3b82f6' fill-opacity='1'/>
+<text x='101.0' y='655.1' fill='#6b7280' font-size='9' text-anchor='middle'>68s</text>
+<path d='M114.0 674.0 L114.0 658.3 Q114.0 654.3 118.0 654.3 L132.0 654.3 Q136.0 654.3 136.0 658.3 L136.0 674.0 Z' fill='#e8572a' fill-opacity='1'/>
+<text x='125.0' y='650.3' fill='#6b7280' font-size='9' text-anchor='middle'>90s</text>
+<path d='M138.0 674.0 L138.0 660.6 Q138.0 656.6 142.0 656.6 L156.0 656.6 Q160.0 656.6 160.0 660.6 L160.0 674.0 Z' fill='#7c3aed' fill-opacity='1'/>
+<text x='149.0' y='652.6' fill='#6b7280' font-size='9' text-anchor='middle'>80s</text>
+<text x='126.0' y='690.0' fill='#1f2937' font-size='11' text-anchor='middle'>config-bughunt</text>
+<path d='M268.0 674.0 L268.0 667.5 Q268.0 663.5 272.0 663.5 L286.0 663.5 Q290.0 663.5 290.0 667.5 L290.0 674.0 Z' fill='#3b82f6' fill-opacity='1'/>
+<text x='279.0' y='659.5' fill='#6b7280' font-size='9' text-anchor='middle'>48s</text>
+<path d='M292.0 674.0 L292.0 643.9 Q292.0 639.9 296.0 639.9 L310.0 639.9 Q314.0 639.9 314.0 643.9 L314.0 674.0 Z' fill='#e8572a' fill-opacity='1'/>
+<text x='303.0' y='635.9' fill='#6b7280' font-size='9' text-anchor='middle'>157s</text>
+<path d='M316.0 674.0 L316.0 540.0 Q316.0 536.0 320.0 536.0 L334.0 536.0 Q338.0 536.0 338.0 540.0 L338.0 674.0 Z' fill='#7c3aed' fill-opacity='0.35'/>
+<text x='327.0' y='532.0' fill='#6b7280' font-size='9' text-anchor='middle'>637s ✗</text>
+<text x='304.0' y='690.0' fill='#1f2937' font-size='11' text-anchor='middle'>kv-ttl-store</text>
+<path d='M446.0 674.0 L446.0 666.3 Q446.0 662.3 450.0 662.3 L464.0 662.3 Q468.0 662.3 468.0 666.3 L468.0 674.0 Z' fill='#3b82f6' fill-opacity='1'/>
+<text x='457.0' y='658.3' fill='#6b7280' font-size='9' text-anchor='middle'>54s</text>
+<path d='M470.0 674.0 L470.0 665.0 Q470.0 661.0 474.0 661.0 L488.0 661.0 Q492.0 661.0 492.0 665.0 L492.0 674.0 Z' fill='#e8572a' fill-opacity='1'/>
+<text x='481.0' y='657.0' fill='#6b7280' font-size='9' text-anchor='middle'>59s</text>
+<path d='M494.0 674.0 L494.0 665.7 Q494.0 661.7 498.0 661.7 L512.0 661.7 Q516.0 661.7 516.0 665.7 L516.0 674.0 Z' fill='#7c3aed' fill-opacity='1'/>
+<text x='505.0' y='657.7' fill='#6b7280' font-size='9' text-anchor='middle'>56s</text>
+<text x='482.0' y='690.0' fill='#1f2937' font-size='11' text-anchor='middle'>log-triage</text>
+</svg>

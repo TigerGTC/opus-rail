@@ -1,0 +1,729 @@
+[
+ {
+  "task": "config-bughunt",
+  "arm": "baseline",
+  "rep": 0,
+  "wall_s": 68.6,
+  "timed_out": false,
+  "workdir": "/var/folders/5y/qm68q81162590l7djyhskys40000gn/T/opusrail-bench-8dq5nm_i",
+  "session_id": "f61156c3-55a4-4a2f-9da5-8911aa17cc7c",
+  "cost_usd": 0.4845465,
+  "num_turns": 14,
+  "usage": {
+   "input_tokens": 19,
+   "cache_creation_input_tokens": 22663,
+   "cache_read_input_tokens": 334293,
+   "output_tokens": 3627,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 22663,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "not_available",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 948,
+     "cache_read_input_tokens": 37708,
+     "cache_creation_input_tokens": 223,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 223
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "model_usage": {
+   "claude-opus-5": {
+    "inputTokens": 19,
+    "outputTokens": 3627,
+    "cacheReadInputTokens": 334293,
+    "cacheCreationInputTokens": 22663,
+    "webSearchRequests": 0,
+    "costUSD": 0.4845465,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty"
+   }
+  },
+  "tokens_out": 3627,
+  "tokens_fresh_in": 22682,
+  "tokens_cache_read": 334293,
+  "passed": true,
+  "check_tail": "::test_default_section\nPASS test_confparse.py::test_int_coercion\nPASS test_confparse.py::test_negative_int_coercion\nPASS test_confparse.py::test_sections_named_without_brackets\nPASS test_confparse.py::test_string_values_stripped\nPASS test_confparse.py::test_value_may_contain_equals\nran=6 failures=0\n",
+  "transcript": "~/.claude/projects/-private-var-folders-5y-qm68q81162590l7djyhskys40000gn-T-opusrail-bench-8dq5nm-i/f61156c3-55a4-4a2f-9da5-8911aa17cc7c.jsonl",
+  "main_model": "claude-opus-5",
+  "dispatches": [],
+  "main_edits": 3,
+  "main_tools": {
+   "Bash": 7,
+   "Read": 3,
+   "Edit": 3
+  },
+  "rails_injected": false,
+  "routing_check": false,
+  "arm_violation": false,
+  "tests_ran": 6,
+  "tests_failed": 0,
+  "constraint_violations": [],
+  "extra_files": [],
+  "final_context_tokens": 37933
+ },
+ {
+  "task": "config-bughunt",
+  "arm": "rail",
+  "rep": 0,
+  "wall_s": 90.8,
+  "timed_out": false,
+  "workdir": "/var/folders/5y/qm68q81162590l7djyhskys40000gn/T/opusrail-bench-z92radlq",
+  "session_id": "1d6a7a34-b757-4d96-a94a-7b62ddb0a661",
+  "cost_usd": 0.5466315,
+  "num_turns": 14,
+  "usage": {
+   "input_tokens": 19,
+   "cache_creation_input_tokens": 24550,
+   "cache_read_input_tokens": 342423,
+   "output_tokens": 5193,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 24550,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "not_available",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 578,
+     "cache_read_input_tokens": 39677,
+     "cache_creation_input_tokens": 113,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 113
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "model_usage": {
+   "claude-opus-4-8": {
+    "inputTokens": 19,
+    "outputTokens": 5193,
+    "cacheReadInputTokens": 342423,
+    "cacheCreationInputTokens": 24550,
+    "webSearchRequests": 0,
+    "costUSD": 0.5466315,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "canonicalModel": "claude-opus-4-8",
+    "provider": "firstParty"
+   }
+  },
+  "tokens_out": 5193,
+  "tokens_fresh_in": 24569,
+  "tokens_cache_read": 342423,
+  "passed": true,
+  "check_tail": "::test_default_section\nPASS test_confparse.py::test_int_coercion\nPASS test_confparse.py::test_negative_int_coercion\nPASS test_confparse.py::test_sections_named_without_brackets\nPASS test_confparse.py::test_string_values_stripped\nPASS test_confparse.py::test_value_may_contain_equals\nran=6 failures=0\n",
+  "transcript": "~/.claude/projects/-private-var-folders-5y-qm68q81162590l7djyhskys40000gn-T-opusrail-bench-z92radlq/1d6a7a34-b757-4d96-a94a-7b62ddb0a661.jsonl",
+  "main_model": "claude-opus-4-8",
+  "dispatches": [],
+  "main_edits": 3,
+  "main_tools": {
+   "Bash": 7,
+   "Read": 3,
+   "Edit": 3
+  },
+  "rails_injected": true,
+  "routing_check": true,
+  "arm_violation": false,
+  "tests_ran": 6,
+  "tests_failed": 0,
+  "constraint_violations": [],
+  "extra_files": [],
+  "final_context_tokens": 39792
+ },
+ {
+  "task": "config-bughunt",
+  "arm": "rail-plus",
+  "rep": 0,
+  "wall_s": 80.3,
+  "timed_out": false,
+  "workdir": "/var/folders/5y/qm68q81162590l7djyhskys40000gn/T/opusrail-bench-bgt59c_q",
+  "session_id": "186d107a-b096-4591-ab9a-3ecfaf42ccf2",
+  "cost_usd": 0.5061540000000001,
+  "num_turns": 12,
+  "usage": {
+   "input_tokens": 17,
+   "cache_creation_input_tokens": 23821,
+   "cache_read_input_tokens": 298568,
+   "output_tokens": 4743,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 23821,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "not_available",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 804,
+     "cache_read_input_tokens": 38227,
+     "cache_creation_input_tokens": 843,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 843
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "model_usage": {
+   "claude-opus-4-8": {
+    "inputTokens": 17,
+    "outputTokens": 4743,
+    "cacheReadInputTokens": 298568,
+    "cacheCreationInputTokens": 23821,
+    "webSearchRequests": 0,
+    "costUSD": 0.5061540000000001,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "canonicalModel": "claude-opus-4-8",
+    "provider": "firstParty"
+   }
+  },
+  "tokens_out": 4743,
+  "tokens_fresh_in": 23838,
+  "tokens_cache_read": 298568,
+  "passed": true,
+  "check_tail": "::test_default_section\nPASS test_confparse.py::test_int_coercion\nPASS test_confparse.py::test_negative_int_coercion\nPASS test_confparse.py::test_sections_named_without_brackets\nPASS test_confparse.py::test_string_values_stripped\nPASS test_confparse.py::test_value_may_contain_equals\nran=6 failures=0\n",
+  "transcript": "~/.claude/projects/-private-var-folders-5y-qm68q81162590l7djyhskys40000gn-T-opusrail-bench-bgt59c-q/186d107a-b096-4591-ab9a-3ecfaf42ccf2.jsonl",
+  "main_model": "claude-opus-4-8",
+  "dispatches": [],
+  "main_edits": 3,
+  "main_tools": {
+   "Bash": 5,
+   "Read": 3,
+   "Edit": 3
+  },
+  "rails_injected": true,
+  "routing_check": true,
+  "arm_violation": false,
+  "tests_ran": 6,
+  "tests_failed": 0,
+  "constraint_violations": [],
+  "extra_files": [],
+  "final_context_tokens": 39072
+ },
+ {
+  "task": "kv-ttl-store",
+  "arm": "baseline",
+  "rep": 0,
+  "wall_s": 48.7,
+  "timed_out": false,
+  "workdir": "/var/folders/5y/qm68q81162590l7djyhskys40000gn/T/opusrail-bench-9c0umzte",
+  "session_id": "e67eddef-9cce-41ae-be0c-0947d2c49c32",
+  "cost_usd": 0.421319,
+  "num_turns": 10,
+  "usage": {
+   "input_tokens": 15,
+   "cache_creation_input_tokens": 21508,
+   "cache_read_input_tokens": 256378,
+   "output_tokens": 3119,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 21508,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "not_available",
+   "iterations": [
+    {
+     "input_tokens": 1,
+     "output_tokens": 1027,
+     "cache_read_input_tokens": 36516,
+     "cache_creation_input_tokens": 260,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 260
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "model_usage": {
+   "claude-opus-5": {
+    "inputTokens": 15,
+    "outputTokens": 3119,
+    "cacheReadInputTokens": 256378,
+    "cacheCreationInputTokens": 21508,
+    "webSearchRequests": 0,
+    "costUSD": 0.421319,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty"
+   }
+  },
+  "tokens_out": 3119,
+  "tokens_fresh_in": 21523,
+  "tokens_cache_read": 256378,
+  "passed": true,
+  "check_tail": "PASS test_store.py::test_delete\nPASS test_store.py::test_delete_missing_ok\nPASS test_store.py::test_put_clears_old_ttl\nPASS test_store.py::test_put_get\nPASS test_store.py::test_ttl_alive\nPASS test_store.py::test_ttl_expiry\nran=6 failures=0\n",
+  "transcript": "~/.claude/projects/-private-var-folders-5y-qm68q81162590l7djyhskys40000gn-T-opusrail-bench-9c0umzte/e67eddef-9cce-41ae-be0c-0947d2c49c32.jsonl",
+  "main_model": "claude-opus-5",
+  "dispatches": [],
+  "main_edits": 2,
+  "main_tools": {
+   "Bash": 4,
+   "Read": 3,
+   "Edit": 1,
+   "Write": 1
+  },
+  "rails_injected": false,
+  "routing_check": false,
+  "arm_violation": false,
+  "tests_ran": 6,
+  "tests_failed": 0,
+  "constraint_violations": [],
+  "extra_files": [],
+  "final_context_tokens": 36777
+ },
+ {
+  "task": "kv-ttl-store",
+  "arm": "rail",
+  "rep": 0,
+  "wall_s": 157.4,
+  "timed_out": false,
+  "workdir": "/var/folders/5y/qm68q81162590l7djyhskys40000gn/T/opusrail-bench-jfhanltt",
+  "session_id": "8d686f67-ecb2-49ec-abda-59a98d29fa87",
+  "cost_usd": 0.7621475000000001,
+  "num_turns": 10,
+  "usage": {
+   "input_tokens": 15,
+   "cache_creation_input_tokens": 24958,
+   "cache_read_input_tokens": 269714,
+   "output_tokens": 6112,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 24958,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "not_available",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1829,
+     "cache_read_input_tokens": 39894,
+     "cache_creation_input_tokens": 304,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 304
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "model_usage": {
+   "claude-opus-4-8": {
+    "inputTokens": 15,
+    "outputTokens": 6112,
+    "cacheReadInputTokens": 269714,
+    "cacheCreationInputTokens": 24958,
+    "webSearchRequests": 0,
+    "costUSD": 0.537312,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "canonicalModel": "claude-opus-4-8",
+    "provider": "firstParty"
+   },
+   "claude-opus-5[1m]": {
+    "inputTokens": 18,
+    "outputTokens": 4291,
+    "cacheReadInputTokens": 83566,
+    "cacheCreationInputTokens": 12110,
+    "webSearchRequests": 0,
+    "costUSD": 0.2248355,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty"
+   }
+  },
+  "tokens_out": 6112,
+  "tokens_fresh_in": 24973,
+  "tokens_cache_read": 269714,
+  "passed": true,
+  "check_tail": "PASS test_store.py::test_delete\nPASS test_store.py::test_delete_missing_ok\nPASS test_store.py::test_put_clears_old_ttl\nPASS test_store.py::test_put_get\nPASS test_store.py::test_ttl_alive\nPASS test_store.py::test_ttl_expiry\nran=6 failures=0\n",
+  "transcript": "~/.claude/projects/-private-var-folders-5y-qm68q81162590l7djyhskys40000gn-T-opusrail-bench-jfhanltt/8d686f67-ecb2-49ec-abda-59a98d29fa87.jsonl",
+  "main_model": "claude-opus-4-8",
+  "dispatches": [
+   {
+    "subagent_type": "executor",
+    "prompt_chars": 2210
+   }
+  ],
+  "main_edits": 0,
+  "main_tools": {
+   "Bash": 5,
+   "Read": 3,
+   "Agent": 1
+  },
+  "rails_injected": true,
+  "routing_check": true,
+  "arm_violation": false,
+  "tests_ran": 6,
+  "tests_failed": 0,
+  "constraint_violations": [],
+  "extra_files": [],
+  "final_context_tokens": 40200
+ },
+ {
+  "task": "kv-ttl-store",
+  "arm": "rail-plus",
+  "rep": 0,
+  "wall_s": 637.3,
+  "timed_out": false,
+  "workdir": "/var/folders/5y/qm68q81162590l7djyhskys40000gn/T/opusrail-bench-a88kcl2o",
+  "session_id": "ee270d5b-386a-4316-8bf7-a248852fcfb9",
+  "cost_usd": 0.30613650000000003,
+  "num_turns": 3,
+  "usage": {
+   "input_tokens": 6,
+   "cache_creation_input_tokens": 21420,
+   "cache_read_input_tokens": 80163,
+   "output_tokens": 2073,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 21420,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "not_available",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 22,
+     "cache_read_input_tokens": 33099,
+     "cache_creation_input_tokens": 3570,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 3570
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "model_usage": {
+   "claude-opus-4-8": {
+    "inputTokens": 6,
+    "outputTokens": 2073,
+    "cacheReadInputTokens": 80163,
+    "cacheCreationInputTokens": 21420,
+    "webSearchRequests": 0,
+    "costUSD": 0.30613650000000003,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "canonicalModel": "claude-opus-4-8",
+    "provider": "firstParty"
+   },
+   "claude-opus-5[1m]": {
+    "inputTokens": 8,
+    "outputTokens": 3780,
+    "cacheReadInputTokens": 23642,
+    "cacheCreationInputTokens": 12152,
+    "webSearchRequests": 0,
+    "costUSD": 0.182311,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty"
+   }
+  },
+  "tokens_out": 2073,
+  "tokens_fresh_in": 21426,
+  "tokens_cache_read": 80163,
+  "passed": false,
+  "check_tail": "FAIL test_store.py::test_delete\nFAIL test_store.py::test_delete_missing_ok\nFAIL test_store.py::test_put_clears_old_ttl\nPASS test_store.py::test_put_get\nFAIL test_store.py::test_ttl_alive\nFAIL test_store.py::test_ttl_expiry\nran=6 failures=5\n",
+  "transcript": "~/.claude/projects/-private-var-folders-5y-qm68q81162590l7djyhskys40000gn-T-opusrail-bench-a88kcl2o/ee270d5b-386a-4316-8bf7-a248852fcfb9.jsonl",
+  "main_model": "claude-opus-4-8",
+  "dispatches": [
+   {
+    "subagent_type": "redteam",
+    "prompt_chars": 1083
+   }
+  ],
+  "main_edits": 0,
+  "main_tools": {
+   "Bash": 1,
+   "Agent": 1
+  },
+  "rails_injected": true,
+  "routing_check": true,
+  "arm_violation": false,
+  "tests_ran": 6,
+  "tests_failed": 5,
+  "constraint_violations": [],
+  "extra_files": [],
+  "final_context_tokens": 36671
+ },
+ {
+  "task": "log-triage",
+  "arm": "baseline",
+  "rep": 0,
+  "wall_s": 54.1,
+  "timed_out": false,
+  "workdir": "/var/folders/5y/qm68q81162590l7djyhskys40000gn/T/opusrail-bench-0quwket3",
+  "session_id": "82115d71-f0e7-4c7a-99d1-9215c17c46f8",
+  "cost_usd": 0.4200805,
+  "num_turns": 11,
+  "usage": {
+   "input_tokens": 13,
+   "cache_creation_input_tokens": 22226,
+   "cache_read_input_tokens": 222311,
+   "output_tokens": 3464,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 22226,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "not_available",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 1039,
+     "cache_read_input_tokens": 36776,
+     "cache_creation_input_tokens": 718,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 718
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "model_usage": {
+   "claude-opus-5": {
+    "inputTokens": 13,
+    "outputTokens": 3464,
+    "cacheReadInputTokens": 222311,
+    "cacheCreationInputTokens": 22226,
+    "webSearchRequests": 0,
+    "costUSD": 0.4200805,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "canonicalModel": "claude-opus-5",
+    "provider": "firstParty"
+   }
+  },
+  "tokens_out": 3464,
+  "tokens_fresh_in": 22239,
+  "tokens_cache_read": 222311,
+  "passed": true,
+  "check_tail": "PASS test_triage.py::test_count_by_level\nPASS test_triage.py::test_count_ignores_garbage\nPASS test_triage.py::test_main_prints_sorted_counts\nPASS test_triage.py::test_worst_offenders\nPASS test_triage.py::test_worst_offenders_ties_alpha\nran=5 failures=0\n",
+  "transcript": "~/.claude/projects/-private-var-folders-5y-qm68q81162590l7djyhskys40000gn-T-opusrail-bench-0quwket3/82115d71-f0e7-4c7a-99d1-9215c17c46f8.jsonl",
+  "main_model": "claude-opus-5",
+  "dispatches": [],
+  "main_edits": 2,
+  "main_tools": {
+   "Bash": 4,
+   "Read": 4,
+   "Edit": 2
+  },
+  "rails_injected": false,
+  "routing_check": false,
+  "arm_violation": false,
+  "tests_ran": 5,
+  "tests_failed": 0,
+  "constraint_violations": [],
+  "extra_files": [],
+  "final_context_tokens": 37496
+ },
+ {
+  "task": "log-triage",
+  "arm": "rail",
+  "rep": 0,
+  "wall_s": 59.9,
+  "timed_out": false,
+  "workdir": "/var/folders/5y/qm68q81162590l7djyhskys40000gn/T/opusrail-bench-k903alx0",
+  "session_id": "cfff406a-f226-409f-90c7-3f5af464d2e0",
+  "cost_usd": 0.425872,
+  "num_turns": 10,
+  "usage": {
+   "input_tokens": 13,
+   "cache_creation_input_tokens": 22065,
+   "cache_read_input_tokens": 226214,
+   "output_tokens": 3682,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 22065,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "not_available",
+   "iterations": [
+    {
+     "input_tokens": 1,
+     "output_tokens": 1046,
+     "cache_read_input_tokens": 36873,
+     "cache_creation_input_tokens": 432,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 432
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "model_usage": {
+   "claude-opus-4-8": {
+    "inputTokens": 13,
+    "outputTokens": 3682,
+    "cacheReadInputTokens": 226214,
+    "cacheCreationInputTokens": 22065,
+    "webSearchRequests": 0,
+    "costUSD": 0.425872,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "canonicalModel": "claude-opus-4-8",
+    "provider": "firstParty"
+   }
+  },
+  "tokens_out": 3682,
+  "tokens_fresh_in": 22078,
+  "tokens_cache_read": 226214,
+  "passed": true,
+  "check_tail": "PASS test_triage.py::test_count_by_level\nPASS test_triage.py::test_count_ignores_garbage\nPASS test_triage.py::test_main_prints_sorted_counts\nPASS test_triage.py::test_worst_offenders\nPASS test_triage.py::test_worst_offenders_ties_alpha\nran=5 failures=0\n",
+  "transcript": "~/.claude/projects/-private-var-folders-5y-qm68q81162590l7djyhskys40000gn-T-opusrail-bench-k903alx0/cfff406a-f226-409f-90c7-3f5af464d2e0.jsonl",
+  "main_model": "claude-opus-4-8",
+  "dispatches": [],
+  "main_edits": 2,
+  "main_tools": {
+   "Read": 3,
+   "Edit": 2,
+   "Bash": 4
+  },
+  "rails_injected": true,
+  "routing_check": true,
+  "arm_violation": false,
+  "tests_ran": 5,
+  "tests_failed": 0,
+  "constraint_violations": [],
+  "extra_files": [],
+  "final_context_tokens": 37306
+ },
+ {
+  "task": "log-triage",
+  "arm": "rail-plus",
+  "rep": 0,
+  "wall_s": 56.6,
+  "timed_out": false,
+  "workdir": "/var/folders/5y/qm68q81162590l7djyhskys40000gn/T/opusrail-bench-ql5a0pdb",
+  "session_id": "e84120e4-02a6-40d2-b328-981272fa967c",
+  "cost_usd": 0.3969375,
+  "num_turns": 9,
+  "usage": {
+   "input_tokens": 12,
+   "cache_creation_input_tokens": 22244,
+   "cache_read_input_tokens": 190625,
+   "output_tokens": 3165,
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 22244,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "not_available",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 429,
+     "cache_read_input_tokens": 37231,
+     "cache_creation_input_tokens": 262,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 262
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "model_usage": {
+   "claude-opus-4-8": {
+    "inputTokens": 12,
+    "outputTokens": 3165,
+    "cacheReadInputTokens": 190625,
+    "cacheCreationInputTokens": 22244,
+    "webSearchRequests": 0,
+    "costUSD": 0.3969375,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "canonicalModel": "claude-opus-4-8",
+    "provider": "firstParty"
+   }
+  },
+  "tokens_out": 3165,
+  "tokens_fresh_in": 22256,
+  "tokens_cache_read": 190625,
+  "passed": true,
+  "check_tail": "PASS test_triage.py::test_count_by_level\nPASS test_triage.py::test_count_ignores_garbage\nPASS test_triage.py::test_main_prints_sorted_counts\nPASS test_triage.py::test_worst_offenders\nPASS test_triage.py::test_worst_offenders_ties_alpha\nran=5 failures=0\n",
+  "transcript": "~/.claude/projects/-private-var-folders-5y-qm68q81162590l7djyhskys40000gn-T-opusrail-bench-ql5a0pdb/e84120e4-02a6-40d2-b328-981272fa967c.jsonl",
+  "main_model": "claude-opus-4-8",
+  "dispatches": [],
+  "main_edits": 1,
+  "main_tools": {
+   "Read": 4,
+   "Edit": 1,
+   "Bash": 3
+  },
+  "rails_injected": true,
+  "routing_check": true,
+  "arm_violation": false,
+  "tests_ran": 5,
+  "tests_failed": 0,
+  "constraint_violations": [],
+  "extra_files": [],
+  "final_context_tokens": 37495
+ }
+]
