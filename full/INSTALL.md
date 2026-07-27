@@ -22,7 +22,12 @@ env pin below is what re-points it at 4.8).
    already have hooks on those events, append the opus-rails command objects to
    your existing arrays — don't replace them.
 
-4. **Statusline flag (recommended)**: the hook decides "is this session Opus?" from a
+4. **Plus mode (optional)**: by default the `planner` lane drafts substantive
+   plans and designs; add `"OPUS_RAIL_PLUS": "1"` to the same `env` block to have
+   it draft ALL plan-shaped work, however small. The `redteam` lane is on-demand
+   in both modes — just ask the orchestrator to redteam something.
+
+5. **Statusline flag (recommended)**: the hook decides "is this session Opus?" from a
    flag your statusline writes each render (freshest source right after a `/model`
    switch, and the only source on a session's first prompt). The statusline is the
    command configured under `statusLine.command` in `~/.claude/settings.json`; Claude
@@ -31,7 +36,7 @@ env pin below is what re-points it at 4.8).
    payload). Without this, everything still works from each session's second
    exchange onward via transcript scan.
 
-5. Verify:
+6. Verify:
    - `claude --model opus --print "Reply with only your exact model id"` → `claude-opus-4-8`
    - In an interactive opus session, the first prompt shows the OPUS RAILS block; an
      implementation-shaped prompt adds a ROUTING CHECK.
@@ -47,7 +52,7 @@ Remove the env pin and the five opus-rails hook entries from
 `~/.claude/settings.json`, then:
 
 ```bash
-rm ~/.claude/hooks/opus-rails.py ~/.claude/agents/{executor,redteam,worker}.md
+rm ~/.claude/hooks/opus-rails.py ~/.claude/agents/{executor,planner,redteam,worker}.md
 rm -rf ~/.claude/.opus-rails ~/.claude/.model-live
 ```
 

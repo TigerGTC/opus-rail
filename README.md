@@ -29,25 +29,41 @@ split into Claude Code instead of hoping the model remembers it:
 
 | Lane | Model | Job |
 |---|---|---|
-| **orchestrator** | Opus 4.8 (main loop) | frame tasks, dispatch, adjudicate, verify, commit |
+| **orchestrator** | Opus 4.8 (main loop) | frame tasks, dispatch self-sufficient briefs, adjudicate, verify, commit |
+| **`planner`** | Opus 5 | drafts plans/designs as advisory drafts the orchestrator adjudicates |
 | **`executor`** | Opus 5 | implementation, debugging, tests, focused review — per task |
-| **`redteam`** | Opus 5 | adversarial review of ideas/plans *before* they're presented |
 | **`worker`** | Sonnet | mechanical bulk, read-heavy search |
+| **`redteam`** | Opus 5 | on-demand adversarial review — ask for it; not a routine pass |
+
+Every dispatch brief is **self-sufficient**: objective, exact paths, constraints,
+the command that must pass, the return format — and the decisions already made,
+with reasons. Agents work instead of re-orienting from the repo, and are
+instructed to return gaps rather than reconstruct context.
 
 ```mermaid
 sequenceDiagram
     participant U as You
     participant O as Opus 4.8 (orchestrator)
-    participant R as redteam (Opus 5)
+    participant P as planner (Opus 5)
     participant E as executor (Opus 5)
     U->>O: implementation-shaped prompt
     Note over O: ROUTING CHECK injected<br/>at the moment of decision
-    O->>R: proposal + context (plans/designs)
-    R-->>O: advisory findings, evidence-ranked
+    O->>P: brief: goal, constraints,<br/>decisions already made
+    P-->>O: advisory draft plan
     O->>E: scoped dispatch: objective, paths,<br/>constraints, command that must pass
     E-->>O: files changed + verification result
     O->>U: adjudicated, verified result
 ```
+
+### Modes
+
+- **standard** — the planner lane drafts substantive plans and designs; trivial
+  sequencing stays inline with the orchestrator.
+- **plus** — the planner lane drafts **all** plan-shaped work, however small.
+  Full system: `"OPUS_RAIL_PLUS": "1"` in the settings `env` block. Skill:
+  `/opus-rail plus`.
+- **redteam** — on-demand in both variants: in the full system just ask
+  ("redteam this"); in the skill, arm it with `/opus-rail redteam`.
 
 ## Does it actually change behavior?
 
@@ -82,7 +98,8 @@ log telemetry (`opus-rails.py stats`). → **[full/INSTALL.md](full/INSTALL.md)*
 ### Skill only (zero-footprint)
 
 No hooks, no settings surgery. Copy one folder, run `/opus-rail` per session
-(`/opus-rail plus` to add the dispatched redteam lane):
+(`/opus-rail plus` to route all plan-shaped work through the planner lane,
+`/opus-rail redteam` to arm the dispatched adversarial reviewer):
 
 ```bash
 mkdir -p ~/.claude/skills && cp -R skill/opus-rail ~/.claude/skills/

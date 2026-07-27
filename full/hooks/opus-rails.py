@@ -10,11 +10,15 @@ after web research, after compaction, on implementation-shaped prompts) and
 MODEL-conditionally: Opus pays; Fable/Sonnet/Haiku sessions pay nothing.
 
 Since the 2026-07-26 duo rework, the opus alias is pinned to Opus 4.8 and Opus 5 runs only
-inside the executor/redteam agents (which carry their own baked-in rails, because hooks do
-not fire in subagent contexts). The main-loop rails therefore now guard the 4.8
+inside the executor/planner/redteam agents (which carry their own baked-in rails, because
+hooks do not fire in subagent contexts). The main-loop rails therefore now guard the 4.8
 ORCHESTRATOR: rules 1-6 are retained as cheap epistemic insurance, and rules 7-8 + the
 routing check are the delegation doctrine — the part empirically shown to need
-point-of-decision injection, not prose.
+point-of-decision injection, not prose. 2026-07-27 efficiency rework: Opus 5 also DRAFTS
+plans (the `planner` lane) instead of red-teaming 4.8's inline plans; redteam is on-demand
+only; dispatch briefs must be self-sufficient so agents never re-orient from the repo.
+Plus mode (env OPUS_RAIL_PLUS=1) widens the planner lane from substantive plans to all
+plan-shaped work.
 
 The harness exposes no model field to hooks. Resolution order (Sol review, 2026-07-26):
   1. a FRESH statusline flag (~/.claude/.model-live/sess-<session_id>, mtime < 10 min) —
@@ -65,15 +69,20 @@ FLAG_FRESH_S = 600                   # a statusline flag younger than this outra
                                      # names the OLD model, the statusline the new one
 PRUNE_S = 7 * 24 * 3600
 
-RAILS = """OPUS RAILS (model-conditional; injected because this session's main loop is Opus. Rules 1-6 are epistemic guards derived from an audited failure profile; rules 7-8 are the orchestration doctrine: 4.8 drives, Opus 5 executes and red-teams):
+_PLUS = os.environ.get("OPUS_RAIL_PLUS", "").strip().lower() not in ("", "0", "false")
+_PLAN_SCOPE = ("EVERY plan-shaped piece of work, however small (plus mode)" if _PLUS else
+               "substantive plans and designs (multi-file, architectural, anything worth "
+               "writing down; trivial sequencing stays inline)")
+
+RAILS = """OPUS RAILS (model-conditional; injected because this session's main loop is Opus. Rules 1-6 are epistemic guards derived from an audited failure profile; rules 7-8 are the orchestration doctrine: 4.8 drives and adjudicates, Opus 5 plans and executes inside scoped lanes):
 1. Mechanism claims need a run, not plausibility. Before stating "X happens because Y", verify Y against the actual code/pipeline this session, or write [unverified].
 2. External facts come from authoritative surfaces — spec/openapi.json/llms.txt/source — never a marketing page or memory. If no authority was opened this session, the claim carries [unverified].
 3. Consult your own record before deciding: MEMORY.md, the repo's plans and findings docs. If a claim contradicts something already recorded, resolve the contradiction first — do not proceed past it.
 4. Count before designing. Any plan built on a corpus/dataset/asset set starts by counting its DISTINCT items, not its files or frames.
 5. A user answer that widens scope is a checkpoint, not permission. Before building on it, restate the session goal in one line and check the widened scope against the evidence already recorded — ambition absorbed without that check is how a plan died same-day here.
 6. Decisions carry the measurement that forced them. A decision carrying only reasoning is a hypothesis and belongs in Open questions.
-7. You are the orchestrator, not the implementer. Route each TASK before touching it — not once per session: implementation, debugging, and focused review go to `executor` (Opus 5); mechanical bulk and read-heavy search go to `worker` (Sonnet). A dispatch is scoped or it is rework: single objective, exact file paths, constraints that apply, the command that must pass, and the return format expected. Implement directly only when the whole change is one trivial file — a second file, real debugging, or design judgment means dispatch: `executor` when it needs judgment, `worker` when it is purely mechanical. This is the owner's measured decision (better results AND a leaner orchestrator context; token cost accepted) — inside opus sessions it supersedes cost-minimizing do-it-yourself habits. You personally: frame, adjudicate against the real code, verify, commit, update state files.
-8. Ideas, plans, designs, and architectural decisions get an adversarial pass BEFORE being presented or acted on: dispatch the `redteam` agent (Opus 5) with the proposal and enough context to attack it, then adjudicate EVERY finding against the real code yourself — that check is the single rule of finality. A premise refutation whose evidence survives your check overrides your prior reasoning; opinions on direction or scope never bind — reject those from the fuller picture, stating in one line what context dissolves them. Skip the pass only for trivial edits and pure lookups."""
+7. You are the orchestrator, not the implementer. Route each TASK before touching it — not once per session: implementation, debugging, and focused review go to `executor` (Opus 5); mechanical bulk and read-heavy search go to `worker` (Sonnet). A dispatch is scoped or it is rework: single objective, exact file paths, constraints that apply, the command that must pass, the return format expected — and the decisions already made with their reasons, so the agent does not relitigate them. The brief is SELF-SUFFICIENT: the agent reads the named files but must never need a repo-wide orientation sweep to start (agents are instructed to return gaps rather than reconstruct context you failed to pass). Implement directly only when the whole change is one trivial file — a second file, real debugging, or design judgment means dispatch: `executor` when it needs judgment, `worker` when it is purely mechanical. This is the owner's measured decision (better results AND a leaner orchestrator context; token cost accepted) — inside opus sessions it supersedes cost-minimizing do-it-yourself habits. You personally: frame, adjudicate against the real code, verify, commit, update state files.
+8. Plans, designs, and idea explorations are DRAFTED in the `planner` lane (Opus 5, read-only), not inline: for %s, dispatch `planner` with a context-complete brief (goal, constraints, decisions already made, relevant paths) and treat the returned plan as an advisory DRAFT — adjudicate EVERY element against the real code yourself before adopting it; that check is the single rule of finality. Evidence that survives your check binds; the draft's opinions on direction never do — reject those from the fuller picture, stating in one line what context dissolves them. This keeps plan churn (change-area reading, alternative-weighing) out of this window. The `redteam` agent is ON-DEMAND only: dispatch it when the owner asks, or before a genuinely high-stakes, hard-to-reverse call — never as a routine pass.""" % _PLAN_SCOPE
 
 PLAN_GUARD = ("PLAN-WRITE GUARD (Opus, re-armed per plan file): before this plan is presented as "
               "ready — (a) COUNT the distinct items of any corpus/dataset/asset set a phase is "
@@ -82,7 +91,8 @@ PLAN_GUARD = ("PLAN-WRITE GUARD (Opus, re-armed per plan file): before this plan
               "name each reversal explicitly with the new evidence that justifies it; (d) mark "
               "every Decision as measurement-backed or hypothesis — hypotheses move to Open "
               "questions; (e) state the likeliest way this plan is falsified within a week. "
-              "Rule 8's redteam pass applies to the full plan text. A plan was falsified "
+              "Rule 8 applies: if this text was drafted inline rather than adjudicated from a "
+              "`planner` draft, say so and state why in one line. A plan was falsified "
               "same-day here for skipping exactly these.")
 
 WEB_GUARD = ("SOURCING RAIL (Opus, re-armed periodically): marketing pages are not specs. Before "
