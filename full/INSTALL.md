@@ -44,7 +44,17 @@ env pin below is what re-points it at 4.8).
      injections and dispatches are reported separately.
 
 To run raw Opus 5 as the main model anyway: `/model claude-opus-5` (the pin only
-affects the alias).
+affects the alias). The rails still fire there and add a solo-mode note: Opus 5
+can spawn subagents — no model is restricted from the Agent tool — and the
+delegation doctrine matters more without the 4.8 seat, since main-window bloat
+is the observed driver of Opus 5 losing the full picture.
+
+## Pause / resume (per session)
+
+Type `opus-rail off` as a plain prompt to pause every rails injection for the
+current session; `opus-rail on` resumes (rails re-inject on the next prompt).
+Session-keyed — other sessions are unaffected. `/opus-rail disable` and
+`/opus-rail enable` work too if the skill is also installed.
 
 ## Uninstall
 

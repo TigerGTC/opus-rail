@@ -33,7 +33,10 @@ The harness exposes no model field to hooks. Resolution order (Sol review, 2026-
 Subcommands (one per hook event, session-registry.py idiom):
   prompt      UserPromptSubmit      core rails once per session; ROUTING CHECK on
               implementation-shaped prompts (re-armed 20 min); also the compaction
-              FALLBACK — if PreCompact left a marker, re-inject rails + re-read-the-goal
+              FALLBACK — if PreCompact left a marker, re-inject rails + re-read-the-goal;
+              also the session kill-switch: a prompt of `opus-rail off` (or
+              `/opus-rail disable`) pauses ALL injections for this session,
+              `opus-rail on` resumes them
   plan        PreToolUse Edit|Write premise checklist on plans/**.md, once per file
   web         PostToolUse WebFetch|WebSearch  sourcing rail, re-armed after 15 min or compact
   dispatch    PreToolUse ^Agent$    observation only: log subagent dispatches for stats
@@ -120,6 +123,30 @@ ROUTE_NOTE = ("ROUTING CHECK (Opus): this turn looks like implementation. The DE
               "rules alone measurably failed to produce delegation at the point of "
               "action — that is why this check exists. Delegating also keeps this "
               "context window lean.")
+
+# Raw Opus 5 main loop (explicit /model claude-opus-5): the rails already fire (any
+# "opus" model), but the doctrine header assumes the 4.8 seat — this note corrects the
+# framing. Delegation matters MORE solo: main-window bloat is the owner's observed
+# driver of Opus 5 losing the full picture. Docs-verified 2026-07-27: NO model is
+# restricted from the Agent tool; only nested spawning inside subagents is
+# depth-limited (CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH). The real gap is inclination,
+# which is what this note supplies.
+SOLO_NOTE = ("\n(MAIN LOOP IS OPUS 5 DIRECTLY — no 4.8 seat this session. The delegation "
+             "doctrine above applies unchanged and matters MORE here: bloat in this window "
+             "is the measured driver of losing the full picture. You CAN spawn subagents — "
+             "no model is restricted from the Agent tool — so dispatch scoped "
+             "planner/executor/worker lanes with self-sufficient briefs and keep this "
+             "window to framing, adjudication, and verification.)")
+
+# Session kill-switch: typed as a plain prompt so it works with or without the skill
+# installed (an unknown slash command may never reach the hook).
+DISABLE_RE = re.compile(r"(?i)^/?opus-rail[\s:_-]+(disable|off)\s*$")
+ENABLE_RE = re.compile(r"(?i)^/?opus-rail[\s:_-]+(enable|on|resume)\s*$")
+
+
+def _disabled(data):
+    return _marker(data.get("session_id"), "disabled").exists()
+
 
 # Implementation-shaped prompt: imperative build verb present, not a question, not a
 # slash command. Deliberately loose — the note is advisory and re-armed, not a gate.
@@ -362,6 +389,33 @@ def _route_check(data):
 
 def cmd_prompt(data):
     _prune()
+    text = (data.get("prompt") or "").strip()
+    if DISABLE_RE.match(text):
+        # Model-agnostic on purpose: the kill-switch must work even when model
+        # resolution would fail (first headless prompt, missing flag).
+        try:
+            _marker(data.get("session_id"), "disabled").write_text(str(int(time.time())))
+        except OSError:
+            return
+        _log(data, "disable", "")
+        print("OPUS RAILS: paused for this session — no further injections. Resume "
+              "with `opus-rail on`. Tell the user this in one line and stand down "
+              "any opus-rail session routing.")
+        return
+    if ENABLE_RE.match(text):
+        for name in ("disabled", "shown"):   # clearing `shown` re-injects rails next turn
+            m = _marker(data.get("session_id"), name)
+            try:
+                if m.exists():
+                    m.unlink()
+            except OSError:
+                pass
+        _log(data, "enable", "")
+        print("OPUS RAILS: resumed — rails re-inject from the next prompt. Tell the "
+              "user this in one line.")
+        return
+    if _disabled(data):
+        return
     if not _is_opus(data):
         if _resolve(data)[1] == "unresolved":
             _log(data, "obs-miss-unresolved", "")   # a silent miss is a lying guardrail
@@ -371,9 +425,10 @@ def cmd_prompt(data):
     effort = (eff.get("level") if isinstance(eff, dict) else eff) or ""
     effort = effort if isinstance(effort, str) else ""
     extra = EFFORT_NOTE % effort if effort in ("low", "medium") else ""
+    solo = SOLO_NOTE if "opus-5" in _resolve(data)[0].lower() else ""
     route = _route_check(data)
     if _consume_compact_marker(data):
-        print(RAILS + extra + COMPACT_NOTE + route)
+        print(RAILS + solo + extra + COMPACT_NOTE + route)
         _log(data, "prompt-compact", "")
         try:
             shown.write_text(str(int(time.time())))
@@ -381,7 +436,7 @@ def cmd_prompt(data):
             pass
         return
     if _claim(shown):
-        print(RAILS + extra + route)
+        print(RAILS + solo + extra + route)
         _log(data, "prompt", "")
     elif route:
         print(route.strip())
@@ -391,7 +446,7 @@ PLAN_REARM_S = 20 * 60
 
 
 def cmd_plan(data):
-    if not _is_opus(data):
+    if _disabled(data) or not _is_opus(data):
         return
     tool = data.get("tool_name") or ""
     if tool == "ExitPlanMode":
@@ -426,7 +481,7 @@ def cmd_plan(data):
 
 
 def cmd_web(data):
-    if not _is_opus(data):
+    if _disabled(data) or not _is_opus(data):
         return
     m = _marker(data.get("session_id"), "web")
     try:
@@ -442,11 +497,12 @@ def cmd_web(data):
 def cmd_compact(data):
     # Right after compaction the transcript still holds full history, so the normal
     # resolver applies; the flag is the fallback if the payload lacks a transcript.
-    if not _is_opus(data):
+    if _disabled(data) or not _is_opus(data):
         _consume_compact_marker(data)      # don't leave a stale marker for a later model
         return
     _consume_compact_marker(data)
-    print(RAILS + COMPACT_NOTE)
+    solo = SOLO_NOTE if "opus-5" in _resolve(data)[0].lower() else ""
+    print(RAILS + solo + COMPACT_NOTE)
     _log(data, "compact", "")
     # refresh (not clear): rails were JUST re-injected here, so `prompt` stays silent.
     try:
@@ -462,7 +518,7 @@ def cmd_dispatch(data):
     are dispatch ATTEMPTS, not confirmed completions. Redteam review rejected active
     guards here: matcher must be ^Agent$ (Task* tools are unrelated), and the thin-prompt
     heuristic had 0/499 true positives on the historical dispatch corpus."""
-    if not _is_opus(data):
+    if _disabled(data) or not _is_opus(data):
         return
     sub = ((data.get("tool_input") or {}).get("subagent_type")) or "unspecified"
     _log(data, "obs-dispatch", sub)

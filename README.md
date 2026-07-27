@@ -64,6 +64,9 @@ sequenceDiagram
   `/opus-rail plus`.
 - **redteam** — on-demand in both variants: in the full system just ask
   ("redteam this"); in the skill, arm it with `/opus-rail redteam`.
+- **disable** — per-session kill-switch in both variants: type `opus-rail off`
+  as a plain prompt (full system) or run `/opus-rail disable` (skill) to stand
+  down for the session; `opus-rail on` / `/opus-rail` re-enables.
 
 ## Does it actually change behavior?
 
@@ -119,7 +122,10 @@ The trade: instructions instead of hook enforcement, and it assumes an unpinned
 - The rails text is opinionated, derived from audited failure sessions; edit the
   words, keep the mechanism.
 - The full system's env pin re-points the `opus` alias **machine-wide** to 4.8;
-  `/model claude-opus-5` bypasses it.
+  `/model claude-opus-5` bypasses it. The rails still fire in that solo mode and
+  say so: no model is restricted from spawning subagents (docs-verified — only
+  nesting *inside* subagents is depth-limited), so the delegation doctrine
+  applies there too, where it matters most.
 
 ## Repo layout
 

@@ -7,9 +7,10 @@ description: >-
   designs to the planner lane. Invoked as "/opus-rail plus", the planner lane
   drafts ALL plan-shaped work, however small; as "/opus-rail redteam", an
   on-demand Opus 5 adversarial reviewer lane is armed (modes combine:
-  "/opus-rail plus redteam"). Use when the user runs /opus-rail (with any
-  arguments) or asks to enable opus-rail / the 4.8-orchestrator mode. No hooks
-  or config needed — the skill-only variant of the opus-rail system.
+  "/opus-rail plus redteam"). Invoked as "/opus-rail disable", the orchestration
+  stands down for the rest of the session. Use when the user runs /opus-rail
+  (with any arguments) or asks to enable opus-rail / the 4.8-orchestrator mode.
+  No hooks or config needed — the skill-only variant of the opus-rail system.
 ---
 
 # opus-rail (session mode)
@@ -30,6 +31,11 @@ better outcomes, and a leaner context window than Opus 5 driving directly.
   dispatched adversarial pass before being presented (see the REDTEAM CONTRACT).
   Without this argument, do not dispatch redteam subagents — apply adversarial
   scrutiny yourself.
+- `/opus-rail disable` — stand down: stop applying this skill's orchestration
+  and routing for the rest of the session and revert to default behavior;
+  confirm to the user in one line. A later `/opus-rail` (any mode) re-enables.
+  If the full hook system is also installed, its hook sees this same prompt and
+  pauses its rails for the session too.
 
 Arguments combine (`/opus-rail plus redteam`) and decide the mode for the whole
 session; if the user later asks for another mode, re-read this section and switch.
