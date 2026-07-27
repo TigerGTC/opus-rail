@@ -53,8 +53,17 @@ is the observed driver of Opus 5 losing the full picture.
 
 Type `opus-rail off` as a plain prompt to pause every rails injection for the
 current session; `opus-rail on` resumes (rails re-inject on the next prompt).
-Session-keyed — other sessions are unaffected. `/opus-rail disable` and
-`/opus-rail enable` work too if the skill is also installed.
+Session-keyed — other sessions are unaffected.
+
+For a proper slash command, install the control skill:
+
+```bash
+mkdir -p ~/.claude/skills && cp -R skills/opus-rail ~/.claude/skills/
+```
+
+That gives `/opus-rail disable`, `/opus-rail enable`, and `/opus-rail status`
+(hook telemetry + mode report). This control skill is for full-system machines
+only — it replaces, not complements, the distribution skill in `skill/`.
 
 ## Uninstall
 
@@ -63,7 +72,7 @@ Remove the env pin and the five opus-rails hook entries from
 
 ```bash
 rm ~/.claude/hooks/opus-rails.py ~/.claude/agents/{executor,planner,redteam,worker}.md
-rm -rf ~/.claude/.opus-rails ~/.claude/.model-live
+rm -rf ~/.claude/.opus-rails ~/.claude/.model-live ~/.claude/skills/opus-rail
 ```
 
 (`.opus-rails/` holds per-session markers and the telemetry log; `.model-live/`

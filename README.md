@@ -64,9 +64,11 @@ sequenceDiagram
   `/opus-rail plus`.
 - **redteam** — on-demand in both variants: in the full system just ask
   ("redteam this"); in the skill, arm it with `/opus-rail redteam`.
-- **disable** — per-session kill-switch in both variants: type `opus-rail off`
-  as a plain prompt (full system) or run `/opus-rail disable` (skill) to stand
-  down for the session; `opus-rail on` / `/opus-rail` re-enables.
+- **disable** — per-session kill-switch in both variants: `/opus-rail disable`
+  (the full system ships a control skill for it; plain-text `opus-rail off`
+  works hook-only) stands down for the session; `/opus-rail enable` /
+  `/opus-rail` resumes. The full system's control skill also adds
+  `/opus-rail status` for hook telemetry.
 
 ## Does it actually change behavior?
 
@@ -130,8 +132,8 @@ The trade: instructions instead of hook enforcement, and it assumes an unpinned
 ## Repo layout
 
 ```
-full/    hook, agents, settings snippet, install guide
-skill/   the /opus-rail session skill
+full/    hook, agents, control skill, settings snippet, install guide
+skill/   the /opus-rail session skill (skill-only variant)
 assets/  logos
 ```
 
